@@ -1,7 +1,14 @@
 use alloy::{
     primitives::Address, signers::local::PrivateKeySigner, transports::http::reqwest::Url,
 };
-use clap::Parser;
+use clap::{Parser, ValueEnum};
+
+/// Taiko forced inclusion sender fork.
+#[derive(ValueEnum, Clone, Debug)]
+pub enum Fork {
+    Pacaya,
+    Shasta,
+}
 
 /// CLI for the forced inclusion toolbox.
 #[derive(Debug, Parser)]
@@ -25,6 +32,9 @@ pub struct Cli {
     /// Address of the forced inclusion store contract on L1.
     #[clap(long, env)]
     pub forced_inclusion_store_address: Address,
+    /// Which fork to use (default: Shasta)
+    #[arg(long, env, default_value = "shasta")]
+    pub fork: Fork,
 }
 
 /// Command to execute.
