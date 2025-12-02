@@ -196,7 +196,7 @@ fn read_31_bytes(data: &[u8], read_offset: &mut usize) -> [u8; 31] {
 /// advancing the write offset.
 fn write_one_byte(out: &mut [u8; BYTES_PER_BLOB], write_offset: &mut usize, v: u8) {
     assert!(
-        (*write_offset % 32 == 0),
+        (*write_offset).is_multiple_of(32),
         "blob encoding: invalid byte write offset: {}",
         *write_offset
     );
