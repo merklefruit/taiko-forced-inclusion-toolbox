@@ -14,16 +14,16 @@ curl https://raw.githubusercontent.com/merklefruit/taiko-forced-inclusion-toolbo
 vim .env
 
 # to send a transaction through a forced-inclusion batch:
-docker run ghcr.io/merklefruit/taiko-forced-inclusion-toolbox:latest -v .env:/app/.env send
+docker run -v .env:/app/.env ghcr.io/merklefruit/taiko-forced-inclusion-toolbox:latest send
 
 # to read the current queue from the contract:
-docker run ghcr.io/merklefruit/taiko-forced-inclusion-toolbox:latest -v .env:/app/.env read-queue
+docker run -v .env:/app/.env ghcr.io/merklefruit/taiko-forced-inclusion-toolbox:latest read-queue
 
 # to monitor the queue for new events as they are emitted:
-docker run ghcr.io/merklefruit/taiko-forced-inclusion-toolbox:latest -v .env:/app/.env monitor-queue
+docker run -v .env:/app/.env ghcr.io/merklefruit/taiko-forced-inclusion-toolbox:latest monitor-queue
 
 # to periodically send a forced-inclusion batch in a loop:
-docker run ghcr.io/merklefruit/taiko-forced-inclusion-toolbox:latest -v .env:/app/.env spam
+docker run -v .env:/app/.env ghcr.io/merklefruit/taiko-forced-inclusion-toolbox:latest spam
 ```
 
 ## Usage (from source)
