@@ -5,7 +5,7 @@ use std::time::Duration;
 use alloy::{
     consensus::{constants::GWEI_TO_WEI, Transaction},
     network::TransactionBuilder,
-    primitives::{aliases::U24, Address, Bytes, U256},
+    primitives::{aliases::U24, Address, U256},
     providers::{Provider, ProviderBuilder, WalletProvider},
     rpc::types::TransactionRequest,
 };
@@ -80,7 +80,6 @@ pub async fn send_one(
     }];
 
     let manifest = DerivationSourceManifest {
-        prover_auth_bytes: Bytes::new(),
         blocks: block_manifests,
     };
 
