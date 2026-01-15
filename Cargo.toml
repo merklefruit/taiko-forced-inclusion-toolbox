@@ -7,7 +7,7 @@ license = "MIT"
 [dependencies]
 clap = { version = "4.5.35", features = ["derive", "env"] }
 tokio = { version = "1.40.0", features = ["full"] }
-alloy = { version = "1.0.9", features = [
+alloy = { version = "1.4", features = [
     "consensus",
     "json",
     "rpc-types",
@@ -23,4 +23,4 @@ eyre = "0.6.12"
 flate2 = "1.1"
 thiserror = "2.0"
 futures = "0.3.31"
-taiko_protocol = { git = "https://github.com/taikoxyz/taiko-mono.git", rev = "c2c12b527adb9749155761b2b7c8431dc5f15273", package = "protocol", version = "2.0.0" }
+taiko_protocol = { git = "https://github.com/taikoxyz/taiko-mono.git", rev = "18d09fe60de0a960a0a0ca65a5acfe02f35ec7cb", package = "protocol", version = "2.0.0" }
