@@ -23,4 +23,4 @@ eyre = "0.6.12"
 flate2 = "1.1"
 thiserror = "2.0"
 futures = "0.3.31"
-taiko_protocol = { git = "https://github.com/taikoxyz/taiko-mono.git", rev = "f1e2147b65fcc338f28435c3d531bca3a2f890c1", package = "protocol", version = "2.0.0" }
+taiko_protocol = { git = "https://github.com/taikoxyz/taiko-mono.git", rev = "18d09fe60de0a960a0a0ca65a5acfe02f35ec7cb", package = "protocol", version = "2.0.0" }

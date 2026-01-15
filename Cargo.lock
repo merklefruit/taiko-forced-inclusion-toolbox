@@ -1235,7 +1235,7 @@ checksum = "230c5f1ca6a325a32553f8640d31ac9b49f2411e901e427570154868b46da4f7"
 [[package]]
 name = "bindings"
 version = "2.0.0"
-source = "git+https://github.com/taikoxyz/taiko-mono.git?rev=f1e2147b65fcc338f28435c3d531bca3a2f890c1#f1e2147b65fcc338f28435c3d531bca3a2f890c1"
+source = "git+https://github.com/taikoxyz/taiko-mono.git?rev=18d09fe60de0a960a0a0ca65a5acfe02f35ec7cb#18d09fe60de0a960a0a0ca65a5acfe02f35ec7cb"
 dependencies = [
  "alloy",
  "serde",
@@ -3022,7 +3022,7 @@ dependencies = [
 [[package]]
 name = "protocol"
 version = "2.0.0"
-source = "git+https://github.com/taikoxyz/taiko-mono.git?rev=f1e2147b65fcc338f28435c3d531bca3a2f890c1#f1e2147b65fcc338f28435c3d531bca3a2f890c1"
+source = "git+https://github.com/taikoxyz/taiko-mono.git?rev=18d09fe60de0a960a0a0ca65a5acfe02f35ec7cb#18d09fe60de0a960a0a0ca65a5acfe02f35ec7cb"
 dependencies = [
  "alloy",
  "alloy-consensus",
@@ -3033,6 +3033,7 @@ dependencies = [
  "alloy-provider",
  "alloy-rlp",
  "alloy-rpc-types",
+ "alloy-sol-types",
  "anyhow",
  "arc-swap",
  "async-trait",
@@ -3041,6 +3042,7 @@ dependencies = [
  "event-scanner",
  "flate2",
  "serde",
+ "sha2",
  "thiserror",
  "tokio",
  "tokio-retry",
