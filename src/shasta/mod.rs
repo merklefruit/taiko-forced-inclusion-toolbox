@@ -3,9 +3,9 @@ mod chainio;
 use std::time::Duration;
 
 use alloy::{
-    consensus::{constants::GWEI_TO_WEI, Transaction},
+    consensus::{Transaction, constants::GWEI_TO_WEI},
     network::TransactionBuilder,
-    primitives::{aliases::U24, Address, U256},
+    primitives::{Address, U256, aliases::U24},
     providers::{Provider, ProviderBuilder, WalletProvider},
     rpc::types::TransactionRequest,
 };
@@ -127,7 +127,9 @@ pub async fn send_one(
 }
 
 /// Read the forced inclusion queue from the contract.
-pub async fn read_queue(store: &IForcedInclusionStoreInstance<DefaultWalletProvider>) -> eyre::Result<()> {
+pub async fn read_queue(
+    store: &IForcedInclusionStoreInstance<DefaultWalletProvider>,
+) -> eyre::Result<()> {
     let state = store.getForcedInclusionState().call().await?;
     let head = state.head_.to::<u64>();
     let size = state.tail_.saturating_sub(state.head_);
@@ -146,7 +148,9 @@ pub async fn read_queue(store: &IForcedInclusionStoreInstance<DefaultWalletProvi
 }
 
 /// Monitor events in the forced inclusion queue
-pub async fn monitor_queue(store: &IForcedInclusionStoreInstance<DefaultWalletProvider>) -> eyre::Result<()> {
+pub async fn monitor_queue(
+    store: &IForcedInclusionStoreInstance<DefaultWalletProvider>,
+) -> eyre::Result<()> {
     let saved = store.ForcedInclusionSaved_filter().filter;
 
     let mut saved_sub = store.provider().watch_logs(&saved).await?.into_stream();
@@ -165,7 +169,8 @@ pub async fn monitor_queue(store: &IForcedInclusionStoreInstance<DefaultWalletPr
 }
 
 /// Send forced inclusion transactions in a loop.
-pub async fn spam(opts: SpamCmdOptions,
+pub async fn spam(
+    opts: SpamCmdOptions,
     l2: &DefaultWalletProvider,
     store: &IForcedInclusionStoreInstance<DefaultWalletProvider>,
 ) -> eyre::Result<()> {

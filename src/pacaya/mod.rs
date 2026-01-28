@@ -3,13 +3,13 @@ mod chainio;
 use std::{io::Write, time::Duration};
 
 use alloy::{
-    consensus::{constants::GWEI_TO_WEI, Transaction},
+    consensus::{Transaction, constants::GWEI_TO_WEI},
     network::TransactionBuilder,
     primitives::{Address, Bytes, U256},
     providers::{Provider, ProviderBuilder, WalletProvider},
     rpc::types::TransactionRequest,
 };
-use flate2::{write::ZlibEncoder, Compression};
+use flate2::{Compression, write::ZlibEncoder};
 use futures::StreamExt;
 use tokio::time::sleep;
 
