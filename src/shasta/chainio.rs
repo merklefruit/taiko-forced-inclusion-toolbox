@@ -129,6 +129,6 @@ sol! {
         function getForcedInclusionState()
             external
             view
-            returns (uint48 head_, uint48 tail_, uint48 lastProcessedAt_);
+            returns (uint48 head_, uint48 tail_);
     }
 }
