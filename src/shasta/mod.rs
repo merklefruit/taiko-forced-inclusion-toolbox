@@ -6,7 +6,7 @@ use alloy::{
     consensus::{Transaction, constants::GWEI_TO_WEI},
     network::TransactionBuilder,
     primitives::{Address, U256, aliases::U24},
-    providers::{Provider, ProviderBuilder, WalletProvider},
+    providers::{Provider, ProviderBuilder, WalletProvider, fillers::BlobGasEstimator},
     rpc::types::TransactionRequest,
 };
 use futures::StreamExt;
@@ -26,8 +26,11 @@ use chainio::IForcedInclusionStore::{self, ForcedInclusionSaved, IForcedInclusio
 use chainio::LibBlobs::BlobReference;
 
 pub async fn handle_command(cli: crate::cli::Cli) -> eyre::Result<()> {
+    // Use a scaled blob gas estimator with 20% buffer to ensure we're above current fee
+    let blob_gas_estimator = BlobGasEstimator::scaled(120);
     let l1 = ProviderBuilder::new()
         .wallet(cli.l1_private_key)
+        .with_blob_gas_estimator(blob_gas_estimator)
         .connect_http(cli.l1_rpc_url);
     let l2 = ProviderBuilder::new()
         .wallet(cli.l2_private_key)
@@ -45,10 +48,10 @@ pub async fn handle_command(cli: crate::cli::Cli) -> eyre::Result<()> {
 }
 
 /// Send a forced inclusion transaction.
-pub async fn send_one(
+pub async fn send_one<P: Provider>(
     opts: SendCmdOptions,
     l2: &DefaultWalletProvider,
-    store: &IForcedInclusionStoreInstance<DefaultWalletProvider>,
+    store: &IForcedInclusionStoreInstance<P>,
 ) -> eyre::Result<()> {
     // Generate the L2 transaction to be force-included. Make it a simple transfer of 1 gwei.
     let mut l2_tx_req = TransactionRequest::default()
@@ -127,9 +130,7 @@ pub async fn send_one(
 }
 
 /// Read the forced inclusion queue from the contract.
-pub async fn read_queue(
-    store: &IForcedInclusionStoreInstance<DefaultWalletProvider>,
-) -> eyre::Result<()> {
+pub async fn read_queue<P: Provider>(store: &IForcedInclusionStoreInstance<P>) -> eyre::Result<()> {
     let state = store.getForcedInclusionState().call().await?;
     let head = state.head_.to::<u64>();
     let size = state.tail_.saturating_sub(state.head_);
@@ -148,8 +149,8 @@ pub async fn read_queue(
 }
 
 /// Monitor events in the forced inclusion queue
-pub async fn monitor_queue(
-    store: &IForcedInclusionStoreInstance<DefaultWalletProvider>,
+pub async fn monitor_queue<P: Provider>(
+    store: &IForcedInclusionStoreInstance<P>,
 ) -> eyre::Result<()> {
     let saved = store.ForcedInclusionSaved_filter().filter;
 
@@ -169,10 +170,10 @@ pub async fn monitor_queue(
 }
 
 /// Send forced inclusion transactions in a loop.
-pub async fn spam(
+pub async fn spam<P: Provider>(
     opts: SpamCmdOptions,
     l2: &DefaultWalletProvider,
-    store: &IForcedInclusionStoreInstance<DefaultWalletProvider>,
+    store: &IForcedInclusionStoreInstance<P>,
 ) -> eyre::Result<()> {
     let send_opts = SendCmdOptions::default();
 
